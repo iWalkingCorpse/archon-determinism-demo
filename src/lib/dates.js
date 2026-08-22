@@ -21,12 +21,16 @@ export function parseDate(value) {
   return date;
 }
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
 /**
  * True when the timestamp falls inside the [from, to] range.
+ * `toDate` is midnight UTC of the `to` day, so the exclusive upper bound
+ * is midnight UTC of the day after `to` - this keeps the whole `to` day inclusive.
  */
 export function isWithinRange(timestamp, fromDate, toDate) {
   const t = new Date(timestamp).getTime();
-  return t >= fromDate.getTime() && t < toDate.getTime();
+  return t >= fromDate.getTime() && t < toDate.getTime() + ONE_DAY_MS;
 }
 
 /**
