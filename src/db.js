@@ -39,3 +39,7 @@ export function insert(fields) {
 export function findInRange(fromDate, toDate) {
   return items.filter((item) => isWithinRange(item.addedAt, fromDate, toDate));
 }
+
+export function paginate(offset, limit) {
+  return { items: items.slice(offset, offset + limit), total: items.length };
+}
