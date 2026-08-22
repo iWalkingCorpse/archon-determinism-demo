@@ -2,6 +2,8 @@
 
 const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
 /**
  * Parse a YYYY-MM-DD string into a Date at midnight UTC.
  * Returns null for anything that isn't a real calendar date.
@@ -26,7 +28,8 @@ export function parseDate(value) {
  */
 export function isWithinRange(timestamp, fromDate, toDate) {
   const t = new Date(timestamp).getTime();
-  return t >= fromDate.getTime() && t < toDate.getTime();
+  // toDate is midnight UTC of the `to` day, so include the whole day.
+  return t >= fromDate.getTime() && t < toDate.getTime() + ONE_DAY_MS;
 }
 
 /**
