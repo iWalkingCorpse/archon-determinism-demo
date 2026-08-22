@@ -21,12 +21,16 @@ export function parseDate(value) {
   return date;
 }
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
 /**
  * True when the timestamp falls inside the [from, to] range.
+ * toDate is midnight of the end day, so the range extends through
+ * the end of that day to keep the range inclusive on both ends.
  */
 export function isWithinRange(timestamp, fromDate, toDate) {
   const t = new Date(timestamp).getTime();
-  return t >= fromDate.getTime() && t < toDate.getTime();
+  return t >= fromDate.getTime() && t < toDate.getTime() + MS_PER_DAY;
 }
 
 /**
