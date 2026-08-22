@@ -19,7 +19,7 @@ npm install
 npm test
 ```
 
-The suite ships with **11 passing tests and 1 intentionally failing test**.
+The suite ships with **20 passing tests and 1 intentionally failing test**.
 The failing test (`GET /items/search includes items added on the to date`)
 captures the seeded bug that `tasks/bug-a.md` asks a run to fix. If you see
 exactly one failure, the test bed is in its correct starting state.
@@ -27,7 +27,8 @@ exactly one failure, the test bed is in its correct starting state.
 ## API
 
 - `GET /health`
-- `GET /items` — list (pagination arrives via `tasks/feature-b.md`)
+- `GET /items?page=1&limit=20` — paginated list (`limit` max 100); returns
+  `{ count, total, page, hasMore, items }`
 - `GET /items/:id`
 - `POST /items` — `{ name, category, location }`
 - `GET /items/search?from=YYYY-MM-DD&to=YYYY-MM-DD` — inclusive date range

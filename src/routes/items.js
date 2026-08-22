@@ -1,13 +1,20 @@
 import { Router } from "express";
 import * as db from "../db.js";
-import { validateItem, validateRange } from "../lib/validate.js";
-import { itemResponse, listResponse, errorResponse } from "../lib/format.js";
+import { validateItem, validateRange, validatePagination } from "../lib/validate.js";
+import { itemResponse, listResponse, paginatedListResponse, errorResponse } from "../lib/format.js";
 
 const router = Router();
 
-// GET /items — list everything
+// GET /items?page=1&limit=20 — paginated list
 router.get("/", (req, res) => {
-  res.json(listResponse(db.all()));
+  const result = validatePagination(req.query);
+  if (!result.ok) {
+    return res.status(400).json(errorResponse(result.errors));
+  }
+  const { page, limit } = result.value;
+  const offset = (page - 1) * limit;
+  const { items, total } = db.paginate(offset, limit);
+  res.json(paginatedListResponse(items, { total, page, offset }));
 });
 
 // GET /items/search?from=YYYY-MM-DD&to=YYYY-MM-DD — items added in a date range (inclusive)

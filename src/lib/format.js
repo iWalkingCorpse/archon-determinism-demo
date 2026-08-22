@@ -17,6 +17,16 @@ export function listResponse(items) {
   };
 }
 
+export function paginatedListResponse(items, { total, page, offset }) {
+  return {
+    count: items.length,
+    total,
+    page,
+    hasMore: offset + items.length < total,
+    items: items.map(itemResponse)
+  };
+}
+
 export function errorResponse(errors) {
   return { errors: Array.isArray(errors) ? errors : [errors] };
 }
