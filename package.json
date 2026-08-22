@@ -1,0 +1,18 @@
+{
+  "name": "archon-determinism-demo",
+  "version": "1.0.0",
+  "description": "Small inventory API used as a controlled test bed for comparing vanilla Claude Code runs against Archon workflow runs.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
